@@ -1,0 +1,222 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>NEXORA Admin</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>  <section id="loginView" class="login-view">
+    <form id="loginForm" class="login-card">
+      <a class="brand" href="#">NEXORA<span>.</span></a>
+      <p class="eyebrow">SECURE ADMINISTRATION</p>
+      <h1>Admin Login</h1>
+      <p class="muted">Sign in with your authorized administrator account.</p>  <label for="adminEmail">Email address</label>
+  <input id="adminEmail" type="email" autocomplete="username" required>
+
+  <label for="adminPassword">Password</label>
+  <input id="adminPassword" type="password" autocomplete="current-password" required>
+
+  <button id="loginButton" type="submit">Sign in</button>
+  <p id="loginMessage" class="message" role="status"></p>
+</form>
+
+  </section>  <div id="dashboardView" class="app hidden">
+    <aside class="sidebar">
+      <div class="mobile-menu-bar">
+        <a class="brand" href="#overview">NEXORA<span>.</span></a>
+        <button
+          id="menuToggle"
+          class="menu-toggle secondary"
+          type="button"
+          aria-expanded="false"
+          aria-controls="adminNavigation"
+          aria-label="Open navigation menu">
+          <span class="menu-icon" aria-hidden="true">☰</span>
+          <span class="menu-label">Menu</span>
+        </button>
+      </div>  <p class="eyebrow">ADMIN PANEL</p>
+
+  <nav id="adminNavigation" aria-label="Admin navigation">
+    <a href="#overview">Overview</a>
+    <a href="#customers">Customers</a>
+    <a href="#funding">Demo Funding</a>
+    <a href="#withdrawals">Withdrawals</a>
+    <a href="#depositAddresses">Deposit Addresses</a>
+    <a href="#audit">Audit Log</a>
+  </nav>
+
+  <button id="logoutButton" class="secondary logout-button" type="button">
+    Sign out
+  </button>
+</aside>
+
+<main class="main-content">
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">NEXORA MANAGEMENT</p>
+      <h1>Admin Dashboard</h1>
+      <p id="adminStatus" class="message" role="status">Checking session...</p>
+    </div>
+    <span class="live-badge">ADMIN ACCESS</span>
+  </header>
+
+  <section id="overview" class="panel">
+    <h2>Overview</h2>
+    <p class="muted">Account statistics available to the current administrator.</p>
+    <div class="stats-grid">
+      <article class="stat-card">
+        <span>Balance records</span>
+        <strong id="customerCount">—</strong>
+      </article>
+      <article class="stat-card">
+        <span>Pending withdrawals</span>
+        <strong id="pendingCount">—</strong>
+      </article>
+      <article class="stat-card">
+        <span>Admin status</span>
+        <strong id="adminRole">Verifying</strong>
+      </article>
+    </div>
+  </section>
+
+  <section id="customers" class="panel">
+    <h2>Find a Customer</h2>
+    <p class="muted">Search using the customer's registered email address.</p>
+    <form id="customerSearchForm">
+      <div class="search-row">
+        <input id="customerSearch" type="email" placeholder="customer@example.com" required>
+        <button id="searchButton" type="submit">Search</button>
+      </div>
+    </form>
+    <div id="customerResult" class="result-area" aria-live="polite">
+      No customer selected.
+    </div>
+  </section>
+
+  <section id="funding" class="panel">
+    <h2>Add Demo Funds</h2>
+    <p class="muted">This action changes demo balances. It does not transfer real money.</p>
+    <form id="fundForm">
+      <label for="fundAsset">Asset</label>
+      <select id="fundAsset" required>
+        <option value="BTC">BTC</option>
+        <option value="ETH">ETH</option>
+        <option value="USDT">USDT</option>
+        <option value="USD">USD</option>
+      </select>
+
+      <label for="fundAmount">Amount</label>
+      <input id="fundAmount" type="number" min="0.00000001" step="any" placeholder="Enter amount" required>
+
+      <button id="fundButton" type="submit" disabled>Add Demo Funds</button>
+      <p id="fundMessage" class="message" role="status"></p>
+    </form>
+  </section>
+
+  <section id="withdrawals" class="panel">
+    <h2>Withdrawal Requests</h2>
+    <p class="muted">Review pending requests carefully before approving or rejecting.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Customer</th>
+            <th>Amount / Asset</th>
+            <th>Destination</th>
+            <th>Status</th>
+            <th>Requested</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="withdrawalRows">
+          <tr><td colspan="6">Withdrawal requests will appear here.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p id="withdrawalMessage" class="message" role="status"></p>
+  </section>
+
+  <section id="depositAddresses" class="panel">
+    <h2>Deposit Addresses</h2>
+    <p class="muted">
+      Configure public receiving addresses. Use the correct network for each asset.
+      Never enter private keys or recovery phrases.
+    </p>
+    <form id="depositAddressesForm">
+      <label for="btcAddress">Bitcoin (BTC) address</label>
+      <input id="btcAddress" type="text" placeholder="Enter public BTC address" autocomplete="off">
+
+      <label for="ethAddress">Ethereum (ETH) address</label>
+      <input id="ethAddress" type="text" placeholder="Enter public ETH address" autocomplete="off">
+
+      <label for="usdtAddress">Tether (USDT) address</label>
+      <input id="usdtAddress" type="text" placeholder="Enter public USDT address" autocomplete="off">
+
+      <button id="saveDepositAddressesButton" type="submit">Save Deposit Addresses</button>
+      <p id="depositAddressesMessage" class="message" role="status"></p>
+    </form>
+  </section>
+
+  <section id="audit" class="panel">
+    <h2>Audit Log</h2>
+    <p class="muted">Recorded administrator actions and account events.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Action</th>
+            <th>Customer</th>
+            <th>Administrator</th>
+            <th>Asset / Amount</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody id="auditRows">
+          <tr><td colspan="5">Audit records will appear here.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer class="footer">
+    NEXORA Admin · Demo balance management · Secure administration
+  </footer>
+</main>
+
+  </div>  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>  <script src="supabase2.js" defer></script>  <script src="admin.js" defer></script>  <script>
+    (() => {
+      const toggle = document.getElementById("menuToggle");
+      const navigation = document.getElementById("adminNavigation");
+      const sidebar = document.querySelector(".sidebar");
+
+      if (!toggle || !navigation || !sidebar) return;
+
+      const closeMenu = () => {
+        sidebar.classList.remove("menu-open");
+        toggle.setAttribute("aria-expanded", "false");
+        toggle.setAttribute("aria-label", "Open navigation menu");
+        toggle.querySelector(".menu-icon").textContent = "☰";
+      };
+
+      toggle.addEventListener("click", () => {
+        const opening = !sidebar.classList.contains("menu-open");
+        sidebar.classList.toggle("menu-open", opening);
+        toggle.setAttribute("aria-expanded", String(opening));
+        toggle.setAttribute(
+          "aria-label",
+          opening ? "Close navigation menu" : "Open navigation menu"
+        );
+        toggle.querySelector(".menu-icon").textContent = opening ? "✕" : "☰";
+      });
+
+      navigation.querySelectorAll("a").forEach(link => {
+        link.addEventListener("click", closeMenu);
+      });
+
+      window.addEventListener("resize", () => {
+        if (window.innerWidth > 900) closeMenu();
+      });
+    })();
+  </script></body>
+</html>
